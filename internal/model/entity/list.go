@@ -13,6 +13,7 @@ type (
 		description string
 		items       []Item
 		owner       User
+		meta        Meta
 		Audit
 	}
 
@@ -33,3 +34,6 @@ type (
 		Audit
 	}
 )
+
+
+func (l *List)
