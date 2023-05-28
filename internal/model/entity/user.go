@@ -7,5 +7,7 @@ type (
 		core.ID
 		username string
 		email    string
+		meta     Meta
+		Audit
 	}
 )
