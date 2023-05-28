@@ -57,9 +57,14 @@ internal/
         event2.go
     service/
       service1.go          <- Domain services
-      service2.go          <- Domain services
+      service2.go 
       
   infra/
+    port/
+      api/
+        openapi/           <- OpenAPI
+          type.go 
+          api.go
     repo/
         interface-r.go
         interface-w.go
