@@ -3,8 +3,8 @@ package repo
 import (
 	"context"
 
-	"github.com/dddsphere/quanta/internal/model/entity"
-	"github.com/dddsphere/quanta/internal/model/vo"
+	"github.com/dddsphere/quanta/internal/domain/model/entity"
+	"github.com/dddsphere/quanta/internal/domain/model/vo"
 )
 
 type (
