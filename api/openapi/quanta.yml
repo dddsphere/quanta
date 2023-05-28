@@ -1,0 +1,106 @@
+openapi: "3.0.0"
+info:
+  version: 0.0.1
+  title: Quanta
+  description: Quanta Todo List
+  contact:
+    name: Adrian PK
+    url: https://adrianpk.com/
+servers:
+  - url: https://{hostname}/api/v1
+    variables:
+      hostname:
+        default: localhost
+security:
+  - bearerAuth: []
+
+paths:
+  /cmd/{command}:
+    post:
+      operationId: dispatch
+      parameters:
+        - in: path
+          name: command
+          schema:
+            type: string
+          required: true
+          description: Command to be executed
+      requestBody:
+        description: Dispatch commands
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/CreateList'
+      #               - $ref: '#/components/schemas/GetList'
+      #               - $ref: '#/components/schemas/UpdateList'
+      #               - $ref: '#/components/schemas/DeleteList'
+      #               - $ref: '#/components/schemas/AddItemToList'
+      #               - $ref: '#/components/schemas/RemoveItemFromList'
+      #               - $ref: '#/components/schemas/AddTagToItem'
+      #               - $ref: '#/components/schemas/AddPlaceToItem'
+      #               - $ref: '#/components/schemas/SetCategoryToItem'
+      #               - $ref: '#/components/schemas/SetNewStatusToItem'
+
+      responses:
+        '204':
+          description: todo
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+#  /cmd/create-list:
+#    post:
+#      operationId: createList
+#      requestBody:
+#        description: Create a new todo list
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/CreateList'
+#      responses:
+#        '204':
+#          description: todo
+#        default:
+#          description: unexpected error
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    CreateList:
+      type: object
+      required: [userUUID, name, description]
+      properties:
+        userUUID:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Todo List"
+        description:
+          type: string
+          example: "A simple todo list"
+
+    Error:
+      type: object
+      required:
+        - slug
+        - message
+      properties:
+        slug:
+          type: string
+        message:
+          type: string
