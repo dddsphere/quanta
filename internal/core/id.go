@@ -7,12 +7,14 @@ import (
 type (
 	ID interface {
 		ID() string
+		Slug() string
 		Name() string
 		Equals(other ID) bool
 	}
 
 	Identifier struct {
 		id   string
+		slug string
 		name string
 	}
 )
@@ -48,6 +50,18 @@ func (i Identifier) GenID(force ...bool) (ok bool) {
 
 	i.SetID(uid.String(), force...)
 	return true
+}
+
+func (i Identifier) Slug() string {
+	return i.slug
+}
+
+func (i Identifier) SetSlug(slug string, force ...bool) {
+	if !(len(force) > 0 && force[0]) {
+		return
+	}
+
+	i.slug = slug
 }
 
 func (i Identifier) Name() string {
