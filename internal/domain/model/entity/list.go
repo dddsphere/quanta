@@ -20,11 +20,11 @@ type (
 	Item struct {
 		core.ID
 		description string
-		dueDate  time.Time
-		category vo2.Category
-		tags     []vo2.Tag
-		places   []vo2.Place
-		status   []Status
+		dueDate     time.Time
+		category    vo2.Category
+		tags        []vo2.Tag
+		places      []vo2.Place
+		status      []Status
 		Audit
 	}
 
@@ -34,6 +34,3 @@ type (
 		Audit
 	}
 )
-
-
-func (l *List)

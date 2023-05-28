@@ -14,9 +14,4 @@ type (
 		timestamp time.Time
 		props     map[string]any
 	}
-
-	Audit struct {
-		createdAt time.Time
-		updatedAt time.Time
-	}
 )
