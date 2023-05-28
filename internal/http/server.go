@@ -8,6 +8,7 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
+	"github.com/dddsphere/quanta/internal/infra/port/openapi"
 	"github.com/dddsphere/quanta/internal/system"
 )
 
@@ -15,6 +16,7 @@ type (
 	Server struct {
 		system.Worker
 		http.Server
+		cqrs   *CQRSHandler
 		router http.Handler
 	}
 )
@@ -22,11 +24,17 @@ type (
 func NewServer(name string, opts ...system.Option) (server *Server) {
 	return &Server{
 		Worker: system.NewWorker(name, opts...),
+		cqrs:   NewCQRSHadler(opts...),
 	}
 }
 
 func (srv *Server) SetRouter(router http.Handler) {
 	srv.router = router
+}
+
+func (srv *Server) Setup(ctx context.Context) error {
+	srv.router = openapi.Handler(srv.cqrs)
+	return nil
 }
 
 func (srv *Server) Start(ctx context.Context) error {
