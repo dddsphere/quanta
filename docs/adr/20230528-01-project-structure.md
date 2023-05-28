@@ -2,7 +2,7 @@
 Project structure
 
 ## Status
-Proposed
+Implemented
 
 ## Context
 The project is facing challenges related to organizing the codebase and achieving a clear separation of data between different layers. It is important to address the following requirements:
