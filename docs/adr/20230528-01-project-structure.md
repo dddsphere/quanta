@@ -26,46 +26,53 @@ cmd/
     
 internal/
   app/
-    config/
-    core/
-    log/
-    system/
-    grpc/
-    http
-        cqrs/
-        rest/
-          handlers.go      <- HTTP request handlers
-    dto/                   <- DTOs specific to the handlers
-    model/                 <- Thin business models
-      model1.go
-      model2.go
-    service/               <- Business services
-      service1.go
-      service2.go 
-      eventhandlers/
-        eventhandlers.go   <- Event handlers for updating Aggregates
     app.go                 <- Application bootstrap and wiring
+  config/
+  core/
+  log/
+  system/
+  grpc/
+  http/
+    cqrs-handler.go        <- HTTP request handlers
+    rest-handler.go
+  model/                   <- Thin business models
+    model1.go
+    model2.go
+  service/                 <- Business services
+    service1.go
+    service2.go 
+  event
+    handlers/
+      handlers1.go         <- Event handlers for updating Aggregates
     
   domain/
     model/
-      entity/                <- Entities
+      entity/              <- Entities
         aggregate1.go
         entitity1.go
-      events/                <- Events related to aggregates
+      vo/                  <- Value Objects
+        vo1.go
+      events/              <- Events related to aggregates
         event1.go
         event2.go
-      vo/
-        vo1.go
     service/
       service1.go          <- Domain services
       service2.go          <- Domain services
       
-  infrastructure/
-    persistence/
-      writestore/          <- Write Store implementation
-        writestore.go
-      readstore/           <- Read Store implementation
-        readstore.go
+  infra/
+    repo/
+        interface-r.go
+        interface-w.go
+        mem/
+            memimpl-r.go
+            memimpl-w.go
+        mongo/
+            mongoimpl-r.go
+            mongoimpl-w.go
+        pg
+            pgimpl-r.go
+            pgimpl-w.go
+        
 ```
 
 ## Consequences
