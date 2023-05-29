@@ -11,6 +11,8 @@ import (
 	//h "github.com/dddsphere/quanta/internal/driver/http"
 	"github.com/dddsphere/quanta/internal/config"
 	"github.com/dddsphere/quanta/internal/core/errors"
+	"github.com/dddsphere/quanta/internal/infra"
+	"github.com/dddsphere/quanta/internal/infra/store/pg"
 	"github.com/dddsphere/quanta/internal/log"
 	"github.com/dddsphere/quanta/internal/system"
 )
@@ -53,9 +55,11 @@ func (app *App) Run() (err error) {
 func (app *App) Setup(ctx context.Context) error {
 	app.EnableSupervisor()
 
-	// Setup db connections
+	// Setup db.go connections
+	writeDB := db.NewDB(app.opts...)
 
-	// Setup repos
+	// Setup store
+	writeStore := pg.NewWriteStore(writeDB, app.opts...)
 
 	// Setup services
 
@@ -64,6 +68,9 @@ func (app *App) Setup(ctx context.Context) error {
 	// Setup gRPC servers
 
 	// Setup event bus
+
+	// WIP: to avoid unused var message
+	app.Log().Debugf("Write store: %v", writeStore)
 
 	return nil
 }
