@@ -69,13 +69,6 @@ func (h *CQRSHandler) Dispatch(w http.ResponseWriter, r *http.Request, commandNa
 	}
 }
 
-func (h *CQRSHandler) CreateList(w http.ResponseWriter, r *http.Request) {
-	_, err := w.Write([]byte("Not implemented yet"))
-	if err != nil {
-		h.Log().Error(err.Error())
-	}
-}
-
 func (h *CQRSHandler) Error(err error, w http.ResponseWriter) {
 	h.Log().Error(err.Error())
 	http.Error(w, err.Error(), http.StatusInternalServerError)
