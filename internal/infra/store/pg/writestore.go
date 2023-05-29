@@ -1,6 +1,10 @@
 package pg
 
 import (
+	"context"
+	"fmt"
+
+	"github.com/dddsphere/quanta/internal/core/errors"
 	"github.com/dddsphere/quanta/internal/system"
 
 	"github.com/jmoiron/sqlx"
@@ -10,7 +14,7 @@ import (
 type (
 	WriteStore struct {
 		system.Worker
-		db sqlx.DB
+		db *sqlx.DB
 	}
 )
 
@@ -24,6 +28,18 @@ func NewWriteStore(opts ...system.Option) *WriteStore {
 	}
 }
 
+func (ws *WriteStore) Setup(ctx context.Context) error {
+	db, err := ws.getConn()
+	if err != nil {
+		msg := fmt.Sprintf("%s setup error", ws.Name())
+		return errors.Wrap(msg, err)
+	}
+
+	ws.db = db
+
+	return nil
+}
+
 // NOTE: This will be injected later from app
 func (ws *WriteStore) getConn() (*sqlx.DB, error) {
 	// FIX: Get conn. string values from config
@@ -34,12 +50,11 @@ func (ws *WriteStore) getConn() (*sqlx.DB, error) {
 		return nil, err // TODO: Wrap error
 	}
 
-	// Ping the database to check the connection
 	err = db.Ping()
 	if err != nil {
-		return nil, err
+		return nil, err // TODO: Wrap error
 	}
 
-	ws.Log().Info("Connected!")
+	ws.Log().Infof("%s database connected!", ws.Name())
 	return db, nil
 }
