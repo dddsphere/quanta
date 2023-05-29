@@ -65,7 +65,7 @@ internal/
         openapi/           <- OpenAPI
           type.go 
           api.go
-    repo/
+    store/
         interface-r.go
         interface-w.go
         mem/

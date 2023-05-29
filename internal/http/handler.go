@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/dddsphere/quanta/internal/core/errors"
+	"github.com/dddsphere/quanta/internal/dto"
 )
 
 const (
@@ -26,10 +27,20 @@ func (h *CQRSHandler) CreateList(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	// Unmarshal JSON data into struct
-	var data CreateListReq
+	var data dto.CreateList
 	err = json.Unmarshal(body, &data)
 	if err != nil {
 		err = errors.Wrap("cannot unmarshall request data", err)
+		h.Error(err, w)
+	}
+
+	// Request ID
+	data.ReqID = h.genReqID(r)
+	data.UserID = userID
+
+	err = h.event.CreateListEvent(r.Context(), data)
+	if err != nil {
+		h.Log().Errorf("event creation error: %s", err.Error())
 		h.Error(err, w)
 	}
 }
