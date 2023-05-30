@@ -53,7 +53,8 @@ func (db *DB) connString() (connString string) {
 	cfg := db.Cfg()
 	user := cfg.GetString("store.write.db.user")
 	pass := cfg.GetString("store.write.db.pass")
+	name := cfg.GetString("store.write.db.db")
 	host := cfg.GetString("store.write.db.host")
 	port := cfg.GetInt("store.write.db.port")
-	return fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%d sslmode=require", user, pass, host, port)
+	return fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%d sslmode=require", user, pass, name, host, port)
 }

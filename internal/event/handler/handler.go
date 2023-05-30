@@ -29,8 +29,12 @@ func (h *Handler) CreateListEvent(ctx context.Context, data dto.CreateList) erro
 	// TODO: Validate evt data
 
 	evt := event.Event{
-		ReqID: data.ReqID,
-		Name:  data.Name,
+		StreamName:    event.ListStream,
+		StreamID:      event.GenID(),
+		StreamVersion: "0.0.1", // NOTE: Will see later where to get this value
+		Name:          event.CreateListCmd,
+		ID:            data.ReqID, // NOTE: Using request ID for now
+		Payload:       data.Payload,
 	}
 
 	err := h.store.WriteEvent(ctx, evt)
