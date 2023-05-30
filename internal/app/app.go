@@ -8,9 +8,9 @@ import (
 
 	"google.golang.org/grpc"
 
-	//h "github.com/dddsphere/quanta/internal/driver/http"
 	"github.com/dddsphere/quanta/internal/config"
 	"github.com/dddsphere/quanta/internal/core/errors"
+	http2 "github.com/dddsphere/quanta/internal/http"
 	"github.com/dddsphere/quanta/internal/infra"
 	"github.com/dddsphere/quanta/internal/infra/store/pg"
 	"github.com/dddsphere/quanta/internal/log"
@@ -22,7 +22,7 @@ type App struct {
 	system.Worker
 	opts       []system.Option
 	supervisor system.Supervisor
-	http       *http.Server
+	http       *http2.Server
 }
 
 func NewApp(name, namespace string, log log.Logger) (app *App) {
@@ -36,6 +36,7 @@ func NewApp(name, namespace string, log log.Logger) (app *App) {
 	app = &App{
 		Worker: system.NewWorker(name, opts...),
 		opts:   opts,
+		http:   http2.NewServer("http-server", opts...),
 	}
 
 	return app
@@ -59,7 +60,7 @@ func (app *App) Setup(ctx context.Context) error {
 	writeDB := db.NewDB(app.opts...)
 
 	// Setup store
-	writeStore := pg.NewWriteStore(writeDB, app.opts...)
+	eventStore := pg.NewWriteStore(writeDB, app.opts...)
 
 	// Setup services
 
@@ -70,7 +71,7 @@ func (app *App) Setup(ctx context.Context) error {
 	// Setup event bus
 
 	// WIP: to avoid unused var message
-	app.Log().Debugf("Write store: %v", writeStore)
+	app.Log().Debugf("Write store: %v", eventStore)
 
 	return nil
 }
@@ -80,8 +81,8 @@ func (app *App) Start(ctx context.Context) error {
 	defer app.Log().Infof("%s stopped", app.Name())
 
 	app.supervisor.AddTasks(
-	//app.http.Start,
-	//app.grpc.Start,
+		app.http.Start,
+		//app.grpc.Start,
 	)
 
 	app.Log().Infof("%s started!", app.Name())
