@@ -24,6 +24,9 @@ To achieve our goals of materializing aggregate projections in a lightweight man
 
 We aim to avoid a heavy event processor solution based on queues, event stores, or messaging platforms, opting for a simplified and efficient implementation.
 
+## ADR
+A list of Architectural Decision Records [here](https://github.com/dddsphere/quanta/tree/new/wip/docs/adr)
+
 Notes
 -----
 Please note that the exploration and implementation showcased in Quanta does not indicate the discontinuation of efforts initiated in Maetello and TS. On the contrary, Quanta serves as a complementary reference, offering a different perspective and approach to building microservices. The development of the other two projects, [Martello](https://github.com/dddsphere/martello) and [TopSpin](https://github.com/dddsphere/topspin), continues concurrently, each addressing specific aspects and providing a comprehensive toolkit for developers. Quanta expands the options and insights available, contributing to a broader understanding and application of microservices architecture.
