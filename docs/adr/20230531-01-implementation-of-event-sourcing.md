@@ -11,7 +11,7 @@ To illustrate the workflow and interactions within the application service, we h
 
 To illustrate the workflow and interactions within the application service, we provided a UML sequence diagram:
 
-![Event source implementation sequence diagram](https://github.com/dddsphere/quanta/blob/new/wip/docs/adr/image/20230531-01-implementation-of-event-sourcing-01.png)
+![Event source implementation sequence diagram](https://github.com/dddsphere/quanta/blob/main/docs/adr/image/20230531-01-implementation-of-event-sourcing-01.png)
 
 ### Source
 
