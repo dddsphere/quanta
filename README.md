@@ -25,7 +25,7 @@ To achieve our goals of materializing aggregate projections in a lightweight man
 We aim to avoid a heavy event processor solution based on queues, event stores, or messaging platforms, opting for a simplified and efficient implementation.
 
 ## ADR
-A list of Architectural Decision Records [here](https://github.com/dddsphere/quanta/tree/new/wip/docs/adr)
+A list of Architectural Decision Records [here](https://github.com/dddsphere/quanta/tree/main/docs/adr)
 
 Notes
 -----
