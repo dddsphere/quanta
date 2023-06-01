@@ -14,27 +14,27 @@ import (
 	"github.com/dddsphere/quanta/internal/infra"
 	"github.com/dddsphere/quanta/internal/infra/store/pg"
 	"github.com/dddsphere/quanta/internal/log"
-	"github.com/dddsphere/quanta/internal/system"
+	"github.com/dddsphere/quanta/internal/sys"
 )
 
 type App struct {
 	sync.Mutex
-	system.Worker
-	opts       []system.Option
-	supervisor system.Supervisor
+	sys.Worker
+	opts       []sys.Option
+	supervisor sys.Supervisor
 	http       *http2.Server
 }
 
 func NewApp(name, namespace string, log log.Logger) (app *App) {
 	cfg := config.Load(namespace)
 
-	opts := []system.Option{
-		system.WithConfig(cfg),
-		system.WithLogger(log),
+	opts := []sys.Option{
+		sys.WithConfig(cfg),
+		sys.WithLogger(log),
 	}
 
 	app = &App{
-		Worker: system.NewWorker(name, opts...),
+		Worker: sys.NewWorker(name, opts...),
 		opts:   opts,
 		http:   http2.NewServer("http-server", opts...),
 	}
@@ -100,7 +100,7 @@ func (app *App) Shutdown(ctx context.Context) error {
 
 func (app *App) EnableSupervisor() {
 	name := fmt.Sprintf("%s-supervisor", app.Name())
-	app.supervisor = system.NewSupervisor(name, true, app.opts)
+	app.supervisor = sys.NewSupervisor(name, true, app.opts)
 }
 
 // Service interface

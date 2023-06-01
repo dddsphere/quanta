@@ -1,4 +1,4 @@
-package system_test
+package sys_test
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 
 	"github.com/dddsphere/quanta/internal/config"
 	qlog "github.com/dddsphere/quanta/internal/log"
-	"github.com/dddsphere/quanta/internal/system"
+	"github.com/dddsphere/quanta/internal/sys"
 )
 
 const (
@@ -21,9 +21,9 @@ const (
 var (
 	cfg  = &config.Config{}
 	log  = qlog.NewLogger(qlog.Level.Error, false)
-	opts = []system.Option{
-		system.WithConfig(cfg),
-		system.WithLogger(log),
+	opts = []sys.Option{
+		sys.WithConfig(cfg),
+		sys.WithLogger(log),
 	}
 )
 
@@ -43,7 +43,7 @@ func dummyTeardown() {
 
 func TestSupervisor(t *testing.T) {
 	// Create a supervisor instance
-	sv := system.NewSupervisor(name, notify, opts)
+	sv := sys.NewSupervisor(name, notify, opts)
 
 	// AddTask tasks and teardown functions
 	sv.AddTasks(dummyTask, failingTask)
@@ -69,7 +69,7 @@ func TestSupervisor(t *testing.T) {
 
 func TestSupervisorWithSignal(t *testing.T) {
 	// Create a supervisor instance with signal notification
-	sv := system.NewSupervisor(name, notify, opts)
+	sv := sys.NewSupervisor(name, notify, opts)
 
 	// Capture the os.Interrupt signal to simulate termination
 	c := make(chan os.Signal, 1)
@@ -108,7 +108,7 @@ func TestSupervisorWithContextCancel(t *testing.T) {
 	defer cancel()
 
 	// Create a supervisor instance with the parent context
-	sv := system.NewSupervisor(name, notify, opts)
+	sv := sys.NewSupervisor(name, notify, opts)
 
 	// AddTask a dummy task
 	sv.AddTasks(dummyTask)

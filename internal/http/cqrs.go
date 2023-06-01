@@ -9,12 +9,12 @@ import (
 
 	"github.com/dddsphere/quanta/internal/core/errors"
 	"github.com/dddsphere/quanta/internal/event/handler"
-	"github.com/dddsphere/quanta/internal/system"
+	"github.com/dddsphere/quanta/internal/sys"
 )
 
 type (
 	CQRSHandler struct {
-		system.Worker
+		sys.Worker
 		event handler.Handler
 	}
 
@@ -27,9 +27,9 @@ const (
 	name = "cqrs-handler"
 )
 
-func NewCQRSHadler(opts ...system.Option) *CQRSHandler {
+func NewCQRSHadler(opts ...sys.Option) *CQRSHandler {
 	return &CQRSHandler{
-		Worker: system.NewWorker(name, opts...),
+		Worker: sys.NewWorker(name, opts...),
 	}
 }
 

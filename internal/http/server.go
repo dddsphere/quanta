@@ -9,21 +9,21 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/dddsphere/quanta/internal/infra/port/openapi"
-	"github.com/dddsphere/quanta/internal/system"
+	"github.com/dddsphere/quanta/internal/sys"
 )
 
 type (
 	Server struct {
-		system.Worker
+		sys.Worker
 		http.Server
 		cqrs   *CQRSHandler
 		router http.Handler
 	}
 )
 
-func NewServer(name string, opts ...system.Option) (server *Server) {
+func NewServer(name string, opts ...sys.Option) (server *Server) {
 	return &Server{
-		Worker: system.NewWorker(name, opts...),
+		Worker: sys.NewWorker(name, opts...),
 		cqrs:   NewCQRSHadler(opts...),
 	}
 }
