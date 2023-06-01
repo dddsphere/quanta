@@ -7,12 +7,12 @@ import (
 	"github.com/jmoiron/sqlx"
 
 	"github.com/dddsphere/quanta/internal/core/errors"
-	"github.com/dddsphere/quanta/internal/system"
+	"github.com/dddsphere/quanta/internal/sys"
 )
 
 type (
 	DB struct {
-		system.Worker
+		sys.Worker
 		*sqlx.DB
 	}
 )
@@ -21,9 +21,9 @@ const (
 	name = "pg-db"
 )
 
-func NewDB(opts ...system.Option) *DB {
+func NewDB(opts ...sys.Option) *DB {
 	return &DB{
-		Worker: system.NewWorker(name, opts...),
+		Worker: sys.NewWorker(name, opts...),
 		DB:     nil,
 	}
 }
