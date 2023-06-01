@@ -30,7 +30,7 @@ internal/
   config/
   core/
   log/
-  system/
+  sys/
   grpc/
   http/
     cqrs-handler.go        <- HTTP request handlers

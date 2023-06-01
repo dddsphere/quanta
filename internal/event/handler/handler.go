@@ -6,11 +6,11 @@ import (
 	"github.com/dddsphere/quanta/internal/dto"
 	"github.com/dddsphere/quanta/internal/event"
 	"github.com/dddsphere/quanta/internal/infra/store"
-	"github.com/dddsphere/quanta/internal/system"
+	"github.com/dddsphere/quanta/internal/sys"
 )
 
 type Handler struct {
-	system.Worker
+	sys.Worker
 	store store.Write // Inject the write store dependency
 }
 
@@ -18,9 +18,9 @@ const (
 	name = "app-event-handler"
 )
 
-func NewHandler(store store.Write, opts ...system.Option) *Handler {
+func NewHandler(store store.Write, opts ...sys.Option) *Handler {
 	return &Handler{
-		Worker: system.NewWorker(name, opts...),
+		Worker: sys.NewWorker(name, opts...),
 		store:  store,
 	}
 }

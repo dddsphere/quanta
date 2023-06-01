@@ -7,14 +7,14 @@ import (
 	"github.com/dddsphere/quanta/internal/core/errors"
 	"github.com/dddsphere/quanta/internal/event"
 	db "github.com/dddsphere/quanta/internal/infra"
-	"github.com/dddsphere/quanta/internal/system"
+	"github.com/dddsphere/quanta/internal/sys"
 
 	_ "github.com/lib/pq"
 )
 
 type (
 	WriteStore struct {
-		system.Worker
+		sys.Worker
 		db *db.DB
 	}
 )
@@ -23,9 +23,9 @@ const (
 	name = "write-store"
 )
 
-func NewWriteStore(db *db.DB, opts ...system.Option) *WriteStore {
+func NewWriteStore(db *db.DB, opts ...sys.Option) *WriteStore {
 	return &WriteStore{
-		Worker: system.NewWorker(name, opts...),
+		Worker: sys.NewWorker(name, opts...),
 		db:     db,
 	}
 }
@@ -47,7 +47,7 @@ func (ws *WriteStore) WriteEvent(ctx context.Context, ev event.Event) (err error
         VALUES (:stream_name, :stream_id, :stream_version, :event_name, :event_id, :payload, :timestamp)`, events)
 
 	if err != nil {
-		return errors.Wrap("Write Event error", err)
+		return errors.Wrap("write event error", err)
 	}
 
 	return nil
